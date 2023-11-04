@@ -1,5 +1,7 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:myapp1/models/heroModel.dart';
 
 void main() {
   runApp(
@@ -19,26 +21,56 @@ class SliderExample extends StatefulWidget {
 }
 
 class _SliderExampleState extends State<SliderExample> {
+  List<HeroModel> indiceList = [
+    HeroModel(
+      name: "",
+      descripcion: "",
+    ),
+    HeroModel(
+      name: "Bajo Peso",
+      descripcion:
+          "Se tiene que consumir más alimentos que contengan los nutrientes necesarios.",
+    ),
+    HeroModel(
+      name: "Normal",
+      descripcion: "Su IMC es normal, mantengase en una dieta balanceada.",
+    ),
+    HeroModel(
+      name: "Sobrepeso",
+      descripcion:
+          "Salga a correr 1 o 2 veces a la semana y beba bastante agua.",
+    ),
+    HeroModel(
+      name: "Obeso",
+      descripcion:
+          "Realice una dieta balanceada y ejercicio 4 a 5 veces a la semana.",
+    )
+  ];
   // Se crea una clase privada solo para este archivo
+  String resultName = "";
+  String recomendDescription = "";
+  double n = 0;
   double b = 0;
   double a = 0;
+  int x = 0;
 
+  void sliderCalculo() {
+    n = b * 1 / (a * a);
+  }
+
+  @override
   void condiciones() {
-    if (0 < calculadora && calculadora < 18) {
-      calculadora == "Bajo Peso";
-    } else if (18.5 <= calculadora && calculadora <= 24.9) {
-      calculadora == "B33333o";
-    } else if (25 <= calculadora && calculadora <= 29.9) {
-      calculadora == "llll";
-    } else if (30 <= calculadora) {
-      calculadora == "Bdsdsd";
+    if (0 < n && n < 18) {
+      x = 1;
+    } else if (18.5 <= n && n <= 24.9) {
+      x = 2;
+    } else if (25 <= n && n <= 29.9) {
+      x = 3;
+    } else if (30 <= n) {
+      x = 4;
     }
   }
-
-  double calculadora = 0;
-  void sliderCalculo() {
-    calculadora = b * 1 / (a * a);
-  }
+  // TODO: implement initState
 
   // variable que creamos para cambiarlo de acuerdo a que cambie el slider.
 
@@ -61,6 +93,7 @@ class _SliderExampleState extends State<SliderExample> {
           ),
           Text(
             "Altura",
+            style: TextStyle(fontSize: 17),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -78,21 +111,21 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ],
           ),
-          Slider(
-            value: a,
-            min: 0, // valor minimo
-            max: 3, // valor maximo hasta donde va llegar
-            onChanged: (num) {
-              a = num; // num es una variable local
-              setState(() {});
-            },
-          ),
-          SizedBox(
-            height: 30.0,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Slider(
+              value: a,
+              min: 0, // valor minimo
+              max: 3, // valor maximo hasta donde va llegar
+              onChanged: (num) {
+                a = num; // num es una variable local
+                setState(() {});
+              },
+            ),
           ),
           Text(
             "Peso",
-            style: TextStyle(height: 3, fontSize: 17),
+            style: TextStyle(fontSize: 17),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -110,22 +143,28 @@ class _SliderExampleState extends State<SliderExample> {
               ),
             ],
           ),
-          Slider(
-            value: b,
-            min: 0, // valor minimo de peso en Kg
-            max: 200, // valor maximo hasta donde va llegar el peso
-            onChanged: (num) {
-              b = num; // num es una variable local
-              setState(() {});
-            },
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Slider(
+              value: b,
+              min: 0, // valor minimo de peso en Kg
+              max: 200, // valor maximo hasta donde va llegar el peso
+              onChanged: (num) {
+                b = num; // num es una variable local
+                setState(() {});
+              },
+            ),
           ),
           SizedBox(
             height: 10.0,
           ),
           Container(
             width: 300,
+            height: 50,
             child: ElevatedButton(
                 onPressed: () {
+                  resultName = indiceList[x].name;
+                  recomendDescription = indiceList[x].descripcion;
                   sliderCalculo();
                   condiciones();
                   setState(() {});
@@ -137,17 +176,30 @@ class _SliderExampleState extends State<SliderExample> {
                   ),
                 )),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                calculadora.toStringAsFixed(
-                    2), // el AsFixed sirve para colocar la cantidad de decimales a la derecha
-                style: TextStyle(
-                  fontSize: 45.0,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  n.toStringAsFixed(
+                      2), // el AsFixed sirve para colocar la cantidad de decimales a la derecha
+                  style: TextStyle(
+                    fontSize: 45.0,
+                  ),
                 ),
-              ),
-            ],
+                Divider(),
+                Text(
+                  "${indiceList[x].name}",
+                  style: TextStyle(fontSize: 17.0, color: Colors.purple),
+                ),
+                Divider(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${indiceList[x].descripcion}"),
+                ),
+              ],
+            ),
           ),
         ],
       ),
