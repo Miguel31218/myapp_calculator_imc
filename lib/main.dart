@@ -38,12 +38,12 @@ class _SliderExampleState extends State<SliderExample> {
     HeroModel(
       name: "Sobrepeso",
       descripcion:
-          "Salga a correr 1 o 2 veces a la semana y beba bastante agua.",
+          "Salga a correr de 1 a 2 veces a la semana y beba bastante agua.",
     ),
     HeroModel(
       name: "Obeso",
       descripcion:
-          "Realice una dieta balanceada y ejercicio 4 a 5 veces a la semana.",
+          "Realice una dieta balanceada y ejercicio de 4 a 5 veces a la semana.",
     )
   ];
   // Se crea una clase privada solo para este archivo
