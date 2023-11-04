@@ -198,6 +198,12 @@ class _SliderExampleState extends State<SliderExample> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text("${indiceList[x].descripcion}"),
                 ),
+                Container(
+                  margin: EdgeInsets.only(right: 20),
+                  height: 150,
+                  width: 200,
+                  child: Image.asset("assets/images/imagen$x.png"),
+                )
               ],
             ),
           ),
